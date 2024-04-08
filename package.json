@@ -1,0 +1,41 @@
+{
+  "name": "electron-esbuild-template",
+  "version": "1.0.0",
+  "description": "Template for electron apps with esbuild",
+  "main": "build/main.js",
+  "scripts": {
+    "watch": "node build.mjs --watch",
+    "start:dev": "cross-env DEV=true concurrently -k \"npm:serve\" \"wait-on http://localhost:3000 && npm run start:build\"",
+    "start:build": "electron ./build/main.js",
+    "serve": "live-server build --no-browser --port=3000 --host=localhost",
+    "build": "node build.mjs && electron-builder",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "build": {
+    "files": [
+      "./build/**/*"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NilsRamstoeck/electron-esbuild-template.git"
+  },
+  "author": "Nils Ramstöck",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NilsRamstoeck/electron-esbuild-template/issues"
+  },
+  "homepage": "https://github.com/NilsRamstoeck/electron-esbuild-template#readme",
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "electron": "^27.0.3",
+    "electron-builder": "^24.6.4",
+    "esbuild": "^0.19.5",
+    "live-server": "^1.2.2",
+    "normalize.css": "^8.0.1",
+    "preact": "^10.18.2",
+    "typescript": "^5.2.2",
+    "wait-on": "^7.2.0"
+  }
+}

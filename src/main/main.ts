@@ -3,35 +3,8 @@ import { app, BrowserWindow, Menu, MenuItem } from 'electron';
 
 //TEMP
 const i18n = {
-    t<T>(s: T) { return s }
-}
-
-function createMenu(): Menu {
-    const menu = new Menu()
-
-    menu.append(new MenuItem({
-        label: i18n.t('Dev'),
-        submenu: [
-            {
-                label: i18n.t('Toggle Developer Tools'),
-                accelerator: 'ctrl+shift+i',
-                click: () => { BrowserWindow.getFocusedWindow()!.webContents.toggleDevTools() }
-            }, {
-                label: i18n.t('Reload'),
-                accelerator: 'f5',
-                click: () => { BrowserWindow.getFocusedWindow()!.reload() }
-            },
-            {
-                label: i18n.t('Exit'),
-                accelerator: 'esc',
-                click: () => { app.quit() }
-            },
-        ]
-
-    }))
-
-    return menu;
-}
+    t<T>(s: T) { return s; }
+};
 
 function createWindow() {
 
@@ -45,19 +18,17 @@ function createWindow() {
         minHeight: height,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
-            nodeIntegration: true,
+            nodeIntegration: false,
+            sandbox: true
         },
     });
 
-    if (process.env.DEV == 'true') {
-        mainWindow.loadURL('http://localhost:3000');
-    }
-    else {
-        mainWindow.loadFile(path.join(__dirname, 'index.html'));
-    }
+    console.log(process.argv);
+
+    mainWindow.loadURL(process.argv[1]);
 
     // Open the DevTools.
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
 
     return mainWindow;
 }
@@ -68,9 +39,9 @@ function createWindow() {
 // Some APIs can only be used after this event occurs.
 
 app.whenReady().then(async () => {
-    Menu.setApplicationMenu(createMenu());
+    Menu.setApplicationMenu(null);
     createWindow();
-})
+});
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits

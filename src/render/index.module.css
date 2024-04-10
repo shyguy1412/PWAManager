@@ -1,0 +1,48 @@
+:root {
+    /**https://colorffy.com/dark-theme-generator**/
+    /** CSS DARK THEME PRIMARY COLORS */
+
+    --color-primary-100: #e91e63;
+    --color-primary-200: #ef4873;
+    --color-primary-300: #f46583;
+    --color-primary-400: #f97d93;
+    --color-primary-500: #fd94a4;
+    --color-primary-600: #ffaab6;
+    /** CSS DARK THEME SURFACE COLORS */
+    --color-surface-100: #121212;
+    --color-surface-200: #282828;
+    --color-surface-300: #3f3f3f;
+    --color-surface-400: #575757;
+    --color-surface-500: #717171;
+    --color-surface-600: #8b8b8b;
+    /** CSS DARK THEME MIXED SURFACE COLORS */
+    --color-surface-mixed-100: #26181a;
+    --color-surface-mixed-200: #3b2d2f;
+    --color-surface-mixed-300: #514445;
+    --color-surface-mixed-400: #675c5d;
+    --color-surface-mixed-500: #7f7576;
+    --color-surface-mixed-600: #978f90;
+    /** EXAMPLES */
+    color: var(--color-primary-600);
+    background-color: var(--color-surface-300);
+
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-surface-200);
+}
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    user-select: none;
+}
+
+.grid {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, 4em);
+    gap: 1em;
+}

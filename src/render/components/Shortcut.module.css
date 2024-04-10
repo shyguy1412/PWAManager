@@ -1,0 +1,15 @@
+.shortcut{
+  width: 3em;
+  height: 3em;
+  /* background-color: lightgray; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+svg{
+  color: var(--color-primary-100);
+}

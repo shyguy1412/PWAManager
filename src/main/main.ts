@@ -1,10 +1,10 @@
 import * as path from 'path';
-import { app, BrowserWindow, Menu, MenuItem } from 'electron';
+import { app, BrowserWindow } from 'electron';
+import { ipcMain } from 'electron/main';
+import { readFile, writeFile } from 'fs/promises';
 
-//TEMP
-const i18n = {
-    t<T>(s: T) { return s; }
-};
+const appDataPath = app.getPath('userData');
+const SHORTCUTS_FILE = `${appDataPath}/shortcuts.json`;
 
 function createWindow() {
 
@@ -25,10 +25,10 @@ function createWindow() {
 
     console.log(process.argv);
 
-    mainWindow.loadURL(process.argv[1]);
+    mainWindow.loadURL('http://localhost:3000');
 
     // Open the DevTools.
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 
     return mainWindow;
 }
@@ -39,7 +39,7 @@ function createWindow() {
 // Some APIs can only be used after this event occurs.
 
 app.whenReady().then(async () => {
-    Menu.setApplicationMenu(null);
+    // Menu.setApplicationMenu(null);
     createWindow();
 });
 
@@ -50,4 +50,40 @@ app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit();
     }
+});
+
+
+ipcMain.handle('load-url', (e, url) => {
+    BrowserWindow.getAllWindows()[0].loadURL(url);
+});
+
+ipcMain.handle('load-shortcuts', async () => {
+    console.log('preload');
+
+    const file = await readFile(SHORTCUTS_FILE, { encoding: 'utf8' }).catch(_ => null);
+    if (!file) return {};
+    return JSON.parse(file);
+});
+
+ipcMain.handle('add-shortcut', async (_, name, url) => {
+    console.log('preload');
+
+    const file = await readFile(SHORTCUTS_FILE, { encoding: 'utf8' }).catch(_ => null);
+    const shortcuts = file ? JSON.parse(file) : {};
+    shortcuts[name] = url;
+    console.log('prewrite');
+
+    await writeFile(SHORTCUTS_FILE, JSON.stringify(shortcuts));
+});
+
+
+ipcMain.handle('remove-shortcut', async (_, name) => {
+    console.log('preload');
+
+    const file = await readFile(SHORTCUTS_FILE, { encoding: 'utf8' }).catch(_ => null);
+    const shortcuts = file ? JSON.parse(file) : {};
+    delete shortcuts[name];
+    console.log('prewrite');
+
+    await writeFile(SHORTCUTS_FILE, JSON.stringify(shortcuts));
 });

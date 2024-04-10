@@ -10,7 +10,7 @@ const createMainContext = async () => await context({
   ],
   outdir: "./build",
   outbase: "./src/main",
-  format: 'cjs',
+  format: 'iife',
   platform: "node",
   logLevel: 'info'
 })
@@ -38,6 +38,10 @@ const createRenderContext = async () => await context({
   format: 'esm',
   splitting: true,
   platform: 'browser',
+  alias: {
+    "react": "preact/compat",
+    "react-dom": "preact/compat",
+  },
   minify: !WATCH,
   logLevel: 'info'
 });

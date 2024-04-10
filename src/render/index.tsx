@@ -1,12 +1,32 @@
-import './index.css';
+import './index.module.css';
 import 'normalize.css';
-import { h, hydrate, render } from "preact";
-import { HelloWorld } from "./components/HelloWorld";
+import style from './index.module.css';
+import { h, render } from "preact";
+import { AddShortcut, Shortcut } from './components/Shortcut';
+import { useEffect, useState } from 'preact/hooks';
 
 type Props = {};
 
 function Index({ }: Props) {
-    return <HelloWorld></HelloWorld>
+
+    const [shortcuts, setShortcuts] = useState<Record<string, string>>({});
+
+    useEffect(() => {
+        window.context_bridge.loadShortcuts().then(shortcuts => setShortcuts(shortcuts));
+    }, []);
+
+    return <div class={style.grid}>
+        {Object.entries(shortcuts).map(([name, url]) => <Shortcut
+            name={name}
+            url={url}
+            update={async () => {
+                setShortcuts(await window.context_bridge.loadShortcuts());
+            }}
+        ></Shortcut>)}
+        <AddShortcut update={async () => {
+            setShortcuts(await window.context_bridge.loadShortcuts());
+        }}></AddShortcut>
+    </div>;
 }
 
 console.log('LOADED');

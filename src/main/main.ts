@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { app, BrowserWindow, Menu } from 'electron';
+import { app, BrowserWindow, nativeImage, Menu } from 'electron';
 import { ipcMain } from 'electron/main';
 import { readFile, writeFile } from 'fs/promises';
 
@@ -25,6 +25,11 @@ function createWindow() {
 
     mainWindow.loadFile('./index.html');
 
+    mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+        BrowserWindow.getAllWindows()[0].loadURL(url);
+        return { action: 'deny' }
+    })
+
     // Open the DevTools.
     //mainWindow.webContents.openDevTools();
 
@@ -36,8 +41,36 @@ function createWindow() {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 
+const template = [
+    {
+        label: 'Back',
+        click: async () => {
+            BrowserWindow.getAllWindows()[0].webContents.goBack();
+        },
+    },
+    {
+        label: 'Home',
+        click: async () => {
+            BrowserWindow.getAllWindows()[0].loadFile('./index.html');
+        },
+    },
+    {
+        label: 'Reload',
+        click: async () => {
+            BrowserWindow.getAllWindows()[0].reload();
+        },
+    },
+    {
+        label: 'DevTools',
+        click: async () => {
+            BrowserWindow.getAllWindows()[0].webContents.openDevTools();
+        },
+    },
+]
+
 app.whenReady().then(async () => {
-    Menu.setApplicationMenu(null);
+    const menu = Menu.buildFromTemplate(template)
+    Menu.setApplicationMenu(menu)
     createWindow();
 });
 

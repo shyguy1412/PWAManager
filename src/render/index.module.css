@@ -1,13 +1,12 @@
 :root {
     /**https://colorffy.com/dark-theme-generator**/
     /** CSS DARK THEME PRIMARY COLORS */
-
-    --color-primary-100: #e91e63;
-    --color-primary-200: #ef4873;
-    --color-primary-300: #f46583;
-    --color-primary-400: #f97d93;
-    --color-primary-500: #fd94a4;
-    --color-primary-600: #ffaab6;
+    --color-primary-100: #382bf0;
+    --color-primary-200: #5e43f3;
+    --color-primary-300: #7a5af5;
+    --color-primary-400: #9171f8;
+    --color-primary-500: #a688fa;
+    --color-primary-600: #ba9ffb;
     /** CSS DARK THEME SURFACE COLORS */
     --color-surface-100: #121212;
     --color-surface-200: #282828;
@@ -16,27 +15,34 @@
     --color-surface-500: #717171;
     --color-surface-600: #8b8b8b;
     /** CSS DARK THEME MIXED SURFACE COLORS */
-    --color-surface-mixed-100: #26181a;
-    --color-surface-mixed-200: #3b2d2f;
-    --color-surface-mixed-300: #514445;
-    --color-surface-mixed-400: #675c5d;
-    --color-surface-mixed-500: #7f7576;
-    --color-surface-mixed-600: #978f90;
-    /** EXAMPLES */
-    color: var(--color-primary-600);
-    background-color: var(--color-surface-300);
+    --color-surface-mixed-100: #1a1625;
+    --color-surface-mixed-200: #2f2b3a;
+    --color-surface-mixed-300: #46424f;
+    --color-surface-mixed-400: #5e5a66;
+    --color-surface-mixed-500: #76737e;
+    --color-surface-mixed-600: #908d96;
 
+    /** Global */
+    color: white;
+    background-color: var(--color-surface-mixed-100);
+
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    font-style: normal;
 }
 
 html,
 body {
     width: 100%;
     height: 100%;
-    background-color: var(--color-surface-200);
+    overflow: hidden;
+}
+
+body {
+    padding: 2em;
 }
 
 * {
-    font-family: Arial, Helvetica, sans-serif;
     user-select: none;
 }
 

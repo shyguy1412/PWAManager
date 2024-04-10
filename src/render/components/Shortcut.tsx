@@ -20,30 +20,35 @@ export function Shortcut({ name, url, update }: Props) {
     setDeleteMode(false);
   }, { once: true });
 
-  return deleteMode ?
-    <div
-      class={style.shortcut}
-      onMouseDown={() => { window.context_bridge.removeShortcut(name); update(); }}>
-      <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+    return <div class={style.main}>{
+        deleteMode ?
+            <div
+                class={style.shortcut}
+                onMouseDown={() => { window.context_bridge.removeShortcut(name); update(); }}>
+                <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+            </div>
+            : <div
+                class={style.shortcut}
+                style={{
+                    backgroundImage: `url(https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${url}&size=256)`
+                }}
+                onClick={() => {
+                    window.context_bridge.loadUrl(url);
+                }}
+                onMouseDown={() => {
+                    timeout = setTimeout(() => {
+                        console.log('LONG PRESS');
+                        setDeleteMode(true);
+                    }, 1000);
+                }}
+                onMouseUp={() => {
+                    clearTimeout(timeout);
+                }}
+            ></div>
+    }
+        <div class={style.label}>{(name.length > 8) ? name.substr(0, 7) + "\u2026" : name}</div>
     </div>
-    : <div
-      class={style.shortcut}
-      style={{
-        backgroundImage: `url(https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${url}&size=256)`
-      }}
-      onClick={() => {
-        window.context_bridge.loadUrl(url);
-      }}
-      onMouseDown={() => {
-        timeout = setTimeout(() => {
-          console.log('LONG PRESS');
-          setDeleteMode(true);
-        }, 1000);
-      }}
-      onMouseUp={() => {
-        clearTimeout(timeout);
-      }}
-    ></div>;
+
 }
 
 export function AddShortcut({ update }: { update: () => void; }) {
@@ -71,14 +76,14 @@ export function AddShortcut({ update }: { update: () => void; }) {
 
   return <>
     <div class={style.shortcut} onClick={() => dialog.current!.showModal()}>
-      <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
+          <FontAwesomeIcon class={style.plus} icon={faPlus}></FontAwesomeIcon>
     </div>
     <dialog ref={dialog}>
       <form ref={form} method="dialog">
-        <input required type="text" placeholder="name" />
-        <input required type="text" placeholder="url" />
-        <button>OK</button>
-        <button type="button" onClick={() => dialog.current!.close()}>CANCEL</button>
+        <input required type="text" placeholder="Google" />
+              <input required type="text" placeholder="https://google.com" class={style.url} />
+        <button>Done</button>
+        <button type="button" onClick={() => dialog.current!.close()}>Cancel</button>
       </form>
     </dialog>
   </>;

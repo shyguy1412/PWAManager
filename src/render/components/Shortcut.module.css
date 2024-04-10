@@ -1,15 +1,63 @@
-.shortcut{
-  width: 3em;
-  height: 3em;
-  /* background-color: lightgray; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+.shortcut {
+    width: 3em;
+    height: 3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-svg{
-  color: var(--color-primary-100);
+svg {
+    color: var(--color-surface-mixed-600);
+    transform: scale(2.5);
+}
+
+.label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    color: var(--color-surface-mixed-100);
+    background-color: var(--color-primary-500);
+    margin-left: 1em;
+    width: 5em;
+    height: 2.5em;
+    border-radius: 10px;
+    outline: none;
+    border: 0;
+}
+
+input {
+    height: 2em;
+    border-radius: 10px;
+    background-color: var(--color-surface-mixed-100);
+    color: white;
+    outline: none;
+    border: 0;
+}
+
+::placeholder {
+    color: var(--color-surface-mixed-400);
+}
+
+.url {
+    margin-left: 0.5em;
+    height: 2em;
+}
+
+dialog {
+    border-radius: 10px;
+    background-color: var(--color-surface-mixed-200);
 }
